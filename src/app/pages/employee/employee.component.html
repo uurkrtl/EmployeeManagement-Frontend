@@ -1,0 +1,157 @@
+<body class="bg-body-tertiary">
+    
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="72" height="57" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
+            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+            <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+          </svg>
+      <h2>Employee form</h2>
+    </div>
+
+    <div class="row g-5">
+      <!-- Employee Add/Update Form -->
+      <div *ngIf="isDelete==false" class="col-md-12 col-lg-12">
+        <form [formGroup]="employeeForm" class="needs-validation">
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">First name</label>
+              <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First name" [(ngModel)]="employeeFirstName">
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last name" [(ngModel)]="employeeLastName">
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="department" class="form-label">Department</label>
+                <input type="text" class="form-control" id="department" formControlName="department" placeholder="Department" [(ngModel)]="employeeDepartment">
+                <div class="invalid-feedback">
+                  Valid department is required.
+                </div>
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="Phone" [(ngModel)]="employeePhone">
+                <div class="invalid-feedback">
+                  Valid phone is required.
+                </div>
+              </div>
+          </div>
+
+          <div class="nav col-md-12 justify-content-center list-unstyled d-flex">
+              <div class="col-sm-2" *ngIf="employeeId==0">
+                <button  class="w-100 btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="addEmployee()">Add</button>
+              </div>
+              <div class="col-sm-2" *ngIf="employeeId!=0">
+                <button  class="w-100 btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateEmployee()">Update</button>
+              </div>
+              <div class="col-sm-2 ms-2">
+                <a href="#" class="w-100 btn btn-danger">Cancel</a>
+              </div>
+          </div>
+
+        </form>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Employee Management</h1>
+                <button *ngIf="errorMessage" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div *ngIf="successMessage" class="modal-body alert alert-success" role="alert">
+                <a>{{successMessage}}</a>
+              </div>
+              <div *ngIf="errorMessage" class="modal-body alert alert-danger" role="alert">
+                <a>{{errorMessage}}</a>
+              </div>
+              <div class="modal-footer">
+                <button *ngIf="errorMessage" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="#" class="btn btn-warning">Employee list</a>
+                <a href="/employee?employeeId=0" class="btn btn-primary">New Employee</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Modal -->
+
+      </div>
+      <!-- END Employee Add/Update Form -->
+
+      <!-- Employee Delete Form -->
+      <div *ngIf="isDelete==true" class="col-md-12 col-lg-12">
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <label for="firstNameDelete" class="form-label">First name</label>
+              <input type="text" class="form-control" id="firstNameDelete" formControlName="firstNameDelete" value="{{employeeFirstName}}" readonly>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastNameDelete" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="lastNameDelete" formControlName="lastNameDelete" value="{{employeeLastName}}" readonly>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="departmentDelete" class="form-label">Department</label>
+                <input type="text" class="form-control" id="departmentDelete" formControlName="departmentDelete" value="{{employeeDepartment}}" readonly>
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="phoneDelete" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="phone" formControlName="phoneDelete" value="{{employeePhone}}" readonly>
+              </div>
+          </div>
+
+          <div class="nav col-md-12 justify-content-center list-unstyled d-flex">
+            <div class="col-sm-3">
+              <b><a>Are you sure you want to delete?</a></b>
+            </div>
+          </div>
+          <div class="nav col-md-12 justify-content-center list-unstyled d-flex">
+              <div class="col-sm-2">
+                <button  class="w-100 btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="deleteEmployee(employeeId)">Yes</button>
+              </div>
+              <div class="col-sm-2 ms-2">
+                <a href="#" class="w-100 btn btn-primary">Cancel</a>
+              </div>
+          </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Employee Management</h1>
+              </div>
+              <div *ngIf="successMessage" class="modal-body">
+                <a>{{successMessage}}</a>
+              </div>
+              <div *ngIf="errorMessage" class="modal-body alert alert-danger" role="alert">
+                <a>{{errorMessage}}</a>
+              </div>
+              <div class="modal-footer">
+                <a href="#" class="btn btn-success">Ok</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Modal -->
+
+      </div>
+      <!-- END Employee Delete Form -->
+    </div>
+  </main>
+</div>
+</body>
