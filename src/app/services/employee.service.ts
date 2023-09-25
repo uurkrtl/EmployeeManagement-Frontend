@@ -7,7 +7,7 @@ import { Employee } from '../models/employee';
   providedIn: 'root'
 })
 export class EmployeeService {
-  apiUrl = "http://localhost:8080/api/";
+  apiUrl = "http://eagle-employee-management.eu-central-1.elasticbeanstalk.com/api/";
 
   constructor(private httpClient: HttpClient) { }
 
